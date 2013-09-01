@@ -5,6 +5,8 @@ ruby '2.0.0'
 gem 'rails', '4.0.0'
 
 gem 'pg', '0.16.0'
+gem "devise", "3.0.3"
+
 gem 'sass-rails', '4.0.0'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '4.0.0'
