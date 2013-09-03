@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
+  has_many :videos
+  has_many :video_histories
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :display_name, 

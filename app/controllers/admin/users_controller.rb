@@ -1,11 +1,11 @@
 class Admin::UsersController < ApplicationController
-  before_filter :get_user, :only => [:index,:new,:edit]
+  before_filter :authenticate_user!
+  load_and_authorize_resource :only => [:index, :show,:new,:destroy,:edit,:update]
   before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create]
-  load_and_authorize_resource :only => [:show,:new,:destroy,:edit,:update]
+  before_filter :get_user, :only => [:index,:new,:edit]
  
   def index
-
-    @users = User.accessible_by(current_ability, :index).limit(20)
+    @users = User.page(params[:page]).per(20)
     respond_to do |format|
       format.html
     end
@@ -69,16 +69,16 @@ class Admin::UsersController < ApplicationController
       end
     end
   end
-  
-  def accessible_roles
-    @accessible_roles = Role.accessible_by(current_ability,:read)
-  end
 
   def get_user
     @current_user = current_user
   end
 
   private
+
+  def accessible_roles
+    @accessible_roles = Role.accessible_by(current_ability,:read)
+  end
 
   def user_params
     params.require(:user).permit(:display_name, :email, :password, :salt, :encrypted_password, :password_confirmation, {:role_ids => []})

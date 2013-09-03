@@ -1,0 +1,37 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <%= link_to "Video CMS", root_url, class: "brand" %>
+          <nav>
+            <ul class="nav pull-right">
+              <% if can? :manage, :admin %>
+              	<li class="dropdown">
+              	  <a class="dropdown-toggle" href="#" data-toggle="dropdown">Admin <b class="caret"></b></a>
+              	  <ul class="dropdown-menu">
+              	  	<li><%= link_to "Users", admin_users_path %></li>
+              	  	<li><%= link_to "Create user", new_admin_user_path %></li>
+                  </ul>
+              	</li>
+              <% end %>
+              <% if can? :manage, :upload %>
+              	<li><%= link_to "Upload", upload_index_path %></li>
+              <% end %>
+              <% if can? :manage, :verify %>
+              	<li><%= link_to "Verify", verify_index_path %></li>
+              <% end %>
+              <% if can? :manage, :edit %>
+              	<li><%= link_to "Edit", edit_index_path %></li>
+              <% end %>
+              <% if can? :manage, :publish %>
+              	<li><%= link_to "Publish", publish_index_path %></li>
+              <% end %>
+              <% if !current_user %>
+              	<li><%= link_to "Sing in", new_user_session_path %></li>
+              <% else %>
+              	<li><%= link_to "Log out", destroy_user_session_path, :method => :delete  %></li>
+              <% end %>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>

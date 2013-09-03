@@ -1,0 +1,18 @@
+<h1>Verify</h1>
+<h2>Pending to verify</h2>
+<% if @pending_videos.blank? %>
+  <p>No videos found</p>
+<% else %>
+  <%= render partial: "shared/private_videos", locals: {videos: @pending_videos} %>
+  <%= paginate @pending_videos, :param_name => 'page1'%>
+<% end %>
+
+<h2>Virefied by you</h2>
+<% if @my_videos.blank? %>
+  <p>No videos found</p>
+<% else %>
+  <% for video in @my_videos %>
+    <%= render partial: "shared/private_videos_view", locals: {video: video.video} %>
+  <% end %>
+  <%= paginate @my_videos, :param_name => 'page2' %>
+<% end %>

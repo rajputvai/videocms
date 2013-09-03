@@ -1,0 +1,19 @@
+<% for video in videos %>
+  <div class="video-wrapper">
+    <div class="title">
+      <h2><%= video.title %></h2>
+    </div>
+    <div class="video">
+      <%= video_tag video.src_url(), controls: true, autobuffer: true %>
+    </div>
+    <div class="details">
+      <p><%= video.description %></p>
+    </div>
+    <div class="history">
+      <p>
+        <%= "Uploaded by #{video.user.display_name.titleize} on " %>
+        <%= "#{video.created_at.strftime('%b %d, %Y %I:%M %p')}" %>
+      </p>
+    </div>
+  </div>
+<% end %>

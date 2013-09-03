@@ -7,13 +7,13 @@ class Ability
     if user.role? :admin
       can :manage, :all
     elsif user.role? :uploader
-      can :manage, Upload
+      can :manage, :upload
     elsif user.role? :verifier
-      can :manage, Verify
+      can :manage, :verify
     elsif user.role? :editor
-      can :manage, Edit
+      can :manage, :edit
     elsif user.role? :publisher
-      can :manage, Publish
+      can :manage, :publish
     end
   end
 

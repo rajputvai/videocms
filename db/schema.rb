@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130901150153) do
+ActiveRecord::Schema.define(version: 20130903195056) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -42,5 +42,36 @@ ActiveRecord::Schema.define(version: 20130901150153) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "video_histories", force: true do |t|
+    t.integer  "video_id"
+    t.integer  "video_status_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "comment"
+  end
+
+  add_index "video_histories", ["user_id"], name: "index_video_histories_on_user_id", using: :btree
+  add_index "video_histories", ["video_id"], name: "index_video_histories_on_video_id", using: :btree
+  add_index "video_histories", ["video_status_id"], name: "index_video_histories_on_video_status_id", using: :btree
+
+  create_table "video_statuses", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "videos", force: true do |t|
+    t.string   "src"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.integer  "current_status"
+  end
+
+  add_index "videos", ["user_id"], name: "index_videos_on_user_id", using: :btree
 
 end

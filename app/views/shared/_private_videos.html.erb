@@ -1,0 +1,42 @@
+<% for video in videos %>  
+  <div class="video-wrapper">
+    <div class="title">
+      <h2><%= video.title %></h2>
+    </div>
+    <div class="video">
+      <%= video_tag video.src_url(), controls: true, autobuffer: true %>
+    </div>
+    <div class="details">
+      <p><%= video.description %></p>
+    </div>
+    <div class="history">
+      <% for video_history in video.video_histories %>
+          <p>
+            <%= "#{video_history.video_status.name.capitalize} by #{video_history.user.display_name.titleize} on " %>
+            <%= "#{video_history.created_at.strftime('%b %d, %Y %I:%M %p')}" %>
+          </p>
+          <% if video_history.comment.present? %>
+              <em><%= "Comments: #{video_history.comment}" %></em>
+          <% end %>
+      <% end %>
+    </div>
+    <% if (can? :manage, :verify) && params[:controller] == 'verify' %>
+      <% butn = "Verified?" %>
+      <% url = "/verify/status" %>
+    <% elsif (can? :manage, :edit) && params[:controller] == 'edit' %>
+      <% butn = "Edited?" %>
+      <% url = "/edit/status" %>
+    <% elsif (can? :manage, :publish) && params[:controller] == 'publish' %>
+      <% butn = "Published?" %>
+      <% url = "/publish/status" %>
+    <% end %>
+    <div class="action">
+      <%= form_tag(url, method: "post") do %>
+        <%= hidden_field_tag(:video_id, video.id) %>
+        <%= label_tag(:comment, "Comment:") %>
+        <%= text_area_tag(:comment,"", size: "45x3") %>
+        <%= submit_tag(butn) %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

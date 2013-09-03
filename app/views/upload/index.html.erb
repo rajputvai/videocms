@@ -1,0 +1,27 @@
+<h1>Upload</h1>
+<%= form_for @video, :url => video_path(@user), :html => {:multipart => true} do |f| %>
+  <%= error_messages(@video) %>
+
+  <p><%= f.label :title %></p>
+  <p><%= f.text_field :title %></p>
+
+  <p><%= f.label :description %></p>
+  <p><%= f.text_field :description %></p>
+
+  <p>
+    <%= f.file_field :src %>
+  </p>
+
+  <p><%= f.submit %></p>
+<% end %>
+<h2>Uploaded by you</h2>
+<div>
+  <% if @user_videos.blank? %>
+    <p>No videos found</p>
+  <% else %>
+    <% for video in @user_videos %>
+      <%= render partial: "shared/private_videos_view", locals: {video: video} %>
+    <% end %>
+    <%= paginate @user_videos %>
+  <% end %>
+</div>

@@ -1,13 +1,14 @@
 module ApplicationHelper
+
 	def error_messages form
-      return "" if form.errors.empty?
+    return "" if form.errors.empty?
 	
 	  messages = form.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
 	  sentence = I18n.t("errors.messages.not_saved",
         :count => form.errors.count,
         :resource => form.class.model_name.human.downcase)
 
-      html = <<-HTML
+    html = <<-HTML
 		<div id="error_explanation">
 		  <h2>#{sentence}</h2>
 		  <ul>#{messages}</ul>
@@ -15,7 +16,6 @@ module ApplicationHelper
 	  HTML
 
       html.html_safe
-
   end
 
   def habtm_checkboxes(obj, column, assignment_objects, assignment_object_display_column)
